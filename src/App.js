@@ -1,103 +1,73 @@
 import "./App.css";
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "swiper/css";
+import "swiper/css/navigation";
+
 import Img1 from "./assests/istockphoto-1632091356-2048x2048.jpg";
 import Img2 from "./assests/istockphoto-1713107584-2048x2048.jpg";
 import Img3 from "./assests/pocket-watch-1637396_1280.jpg";
-import fr1 from './assests/SH1.jpg'
-import fr2 from './assests/SH2.jpg'
-import fr3 from './assests/SH3.jpg'
+import fr1 from "././assests/SH1.jpg";
+import fr2 from "./assests/sh2.jpg";
+import fr3 from "./assests/sh3.png";
+
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, FreeMode } from "swiper/modules";
 
 function App() {
   const carouselItems = [
     {
       title: "First Slide",
-      description:
-        "Some representative placeholder content for the first slide.",
+      subtitle: "Some representative placeholder content for the first slide.",
       backgroundImage: Img1,
-      // foregroundImage: "path/to/foreground-image1.jpg"
+      foregroundImage: fr1,
     },
     {
       title: "Second Slide",
-      description:
-        "Some representative placeholder content for the second slide.",
+      subtitle: "Some representative placeholder content for the second slide.",
       backgroundImage: Img2,
-      // foregroundImage: "path/to/foreground-image2.jpg"
+      foregroundImage: fr2,
     },
     {
       title: "Third Slide",
-      description:
-        "Some representative placeholder content for the third slide.",
+      subtitle: "Some representative placeholder content for the third slide.",
       backgroundImage: Img3,
-      // foregroundImage: "path/to/foreground-image3.jpg"
+      foregroundImage: fr3,
     },
   ];
+
   return (
-    <>
-      <div id="carouselExampleDark" className="carousel carousel-dark slide">
-        <div className="carousel-indicators">
-          {carouselItems.map((item, index) => (
-            <button
-              type="button"
-              data-bs-target="#carouselExampleDark"
-              data-bs-slide-to={index}
-              className={index === 0 ? "active" : ""}
-              aria-current={index === 0 ? "true" : undefined}
-              aria-label={`Slide ${index + 1}`}
-              key={index}
-            ></button>
-          ))}
+    <Swiper
+      navigation={true}
+      modules={[FreeMode, Navigation]}
+      loop={true}
+      className="mySwiper"
+    >
+      {carouselItems.map((item, index) => (
+        <SwiperSlide key={index} className="slide-container">
+        {/* Background Image */}
+        <div
+          className="background-image"
+          style={{ backgroundImage: `url(${item.backgroundImage})` }}
+        ></div>
+      
+        {/* Content Container */}
+        <div className="content-container">
+          <div className="content d-flex flex-column justify-content-center gap-2">
+            <h1>{item.title}</h1>
+            <p>{item.subtitle}</p>
+            <button className="btn btn-primary text-white">
+              <a href="#" className="text-white">View more</a>
+            </button>
+          </div>
+          <div className="foreground-image">
+            <img src={item.foregroundImage} alt={`${item.title} foreground`} />
+          </div>
         </div>
-        <div className="carousel-inner">
-          {carouselItems.map((item, index) => (
-            <div
-              className={`carousel-item ${index === 0 ? "active" : ""}`}
-              data-bs-interval="10000"
-              style={{
-                backgroundImage: `url(${item.backgroundImage})`,
-              }}
-              key={index}
-            >
-              <div className="carousel-caption d-none d-md-block">
-                <h5>{item.title}</h5>
-                <p>{item.description}</p>
-              </div>
-              <div className="image-container">
-                <img
-                  src={item.foregroundImage}
-                  className="d-block w-100"
-                  alt="..."
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-        <button
-          className="carousel-control-prev"
-          type="button"
-          data-bs-target="#carouselExampleDark"
-          data-bs-slide="prev"
-        >
-          <span
-            className="carousel-control-prev-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button
-          className="carousel-control-next"
-          type="button"
-          data-bs-target="#carouselExampleDark"
-          data-bs-slide="next"
-        >
-          <span
-            className="carousel-control-next-icon"
-            aria-hidden="true"
-          ></span>
-          <span className="visually-hidden">Next</span>
-        </button>
-      </div>
-    </>
+      </SwiperSlide>
+      
+      ))}
+    </Swiper>
   );
 }
 
